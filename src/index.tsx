@@ -1,13 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+//import { DataContextProvider, DataContext } from "./Contexts/DataContext";
+
+import { ApolloProvider, ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+
+let uri: string
+if (process.env.NODE_ENV === 'development') {
+  uri = 'http://localhost:8082/query'
+} else {
+  uri = 'https://go-graphql-jishono.herokuapp.com/query'
+}
+
+const httpLink = new HttpLink({ uri })
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ApolloProvider client={client}>
+      <App />
+  </ApolloProvider>
+  ,
   document.getElementById('root')
 );
 
