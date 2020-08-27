@@ -22,8 +22,8 @@ const ResultList = (props: any) => {
 
     const { results, called } = props
 
-    if (results && called) {
-        if (results.length === 0) {
+    if (called) {
+        if (results.length === 0 ) {
             return <div>Ingen treff</div>
         } else {
             return (
@@ -52,7 +52,6 @@ const SearchPage = () => {
     });
 
     useEffect(() => {
-        console.log(data)
         if (data) {
             setResults(data.alleOppslag)
         }
